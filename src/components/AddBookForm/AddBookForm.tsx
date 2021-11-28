@@ -10,18 +10,21 @@ const AddBookForm: React.FC = () => {
     const [author, setAuthor] = useState('');
     const [price, setPrice] = useState(0);
 
-    const book = useSelector((state: Book) => state);
+    // const book = useSelector((state: Book) => state);
+    const book = useSelector(
+        (state: Book) => ({
+            author: state.author,
+            title: state.title,
+            price: state.price,
+            id: randomId(10)
+        })
+    )
     const dispatch = useDispatch();
     const addBook = (book: Book) => dispatch(addBookAction(book));
 
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const book: Book = {
-        id: randomId(10),
-        title,
-        author,
-        price
-    }
+
     addBook(book);
     setTitle('');
     setAuthor('');

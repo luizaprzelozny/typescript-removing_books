@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import './AddBookForm.css';
 import { randomId } from '../../utils/randomId';
 import { Book } from '../../interfaces/Book.interface';
+import { useDispatch, useSelector } from "react-redux";
+import { addBook as addBookAction } from './../../redux/booksRedux';
 
-interface Props {
-    addBook: (book: Book) => void
-}
-
-const AddBookForm: React.FC<Props> = ({addBook}) => {
+const AddBookForm: React.FC = () => {
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [price, setPrice] = useState(0);
+
+    const book = useSelector((state: Book) => state);
+    const dispatch = useDispatch();
+    const addBook = (book: Book) => dispatch(addBookAction(book));
 
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,16 +36,6 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         </form>
     );
 
-
 }
-
-
-
-
-
-
-
-
-
 
 export default AddBookForm;
